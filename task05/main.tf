@@ -38,23 +38,34 @@ module "app_services" {
   depends_on = [module.app_service_plans]
 }
 
+# Update traffic manager endpoints with actual app service IDs
+locals {
+  updated_traffic_manager = {
+    name           = var.traffic_manager.name
+    resource_group = var.traffic_manager.resource_group
+    location       = var.traffic_manager.location
+    routing_method = var.traffic_manager.routing_method
+    endpoints = {
+      app1 = {
+        target_resource_id = module.app_services["app1"].id
+      },
+      app2 = {
+        target_resource_id = module.app_services["app2"].id
+      }
+    }
+  }
+}
+
 # Create Traffic Manager
 module "traffic_manager" {
   source = "./modules/traffic_manager"
 
-  name           = var.traffic_manager.name
-  resource_group = var.traffic_manager.resource_group
-  location       = var.traffic_manager.location
-  routing_method = var.traffic_manager.routing_method
-  endpoints = {
-    app1 = {
-      target_resource_id = module.app_services["app1"].id
-    },
-    app2 = {
-      target_resource_id = module.app_services["app2"].id
-    }
-  }
-  tags = var.tags
+  name           = local.updated_traffic_manager.name
+  resource_group = local.updated_traffic_manager.resource_group
+  location       = local.updated_traffic_manager.location
+  routing_method = local.updated_traffic_manager.routing_method
+  endpoints      = local.updated_traffic_manager.endpoints
+  tags           = var.tags
 
   depends_on = [module.app_services, module.resource_groups]
 }

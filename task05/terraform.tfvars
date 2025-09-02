@@ -78,7 +78,14 @@ traffic_manager = {
   resource_group = "cmaz-f4p05tns-mod5-rg-03"
   location       = "centralus"
   routing_method = "Performance"
-  # endpoints будут заполнены динамически в main.tf
+  endpoints = {
+    app1 = {
+      target_resource_id = ""
+    },
+    app2 = {
+      target_resource_id = ""
+    }
+  }
 }
 
 tags = {

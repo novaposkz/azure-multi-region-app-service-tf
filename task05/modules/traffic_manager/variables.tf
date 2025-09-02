@@ -23,6 +23,7 @@ variable "endpoints" {
   type = map(object({
     target_resource_id = string
   }))
+  default = {}
 }
 
 variable "tags" {

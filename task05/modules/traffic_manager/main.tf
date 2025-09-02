@@ -27,4 +27,13 @@ resource "azurerm_traffic_manager_azure_endpoint" "endpoints" {
   profile_id         = azurerm_traffic_manager_profile.tm.id
   target_resource_id = each.value.target_resource_id
   weight             = 100
+
+  # Добавляем проверку, чтобы не создавать endpoint с пустым target
+  lifecycle {
+    ignore_changes = [target_resource_id]
+    precondition {
+      condition     = each.value.target_resource_id != ""
+      error_message = "Target resource ID cannot be empty for endpoint ${each.key}"
+    }
+  }
 }
