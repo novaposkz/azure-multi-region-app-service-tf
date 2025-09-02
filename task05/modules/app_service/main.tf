@@ -6,14 +6,14 @@ resource "azurerm_windows_web_app" "app" {
 
   site_config {
     always_on = false
-    
+
     dynamic "ip_restriction" {
       for_each = var.ip_restrictions
       content {
-        name        = ip_restriction.value.name
-        ip_address  = ip_restriction.value.ip_address
-        priority    = ip_restriction.value.priority
-        action      = ip_restriction.value.action
+        name       = ip_restriction.value.name
+        ip_address = ip_restriction.value.ip_address
+        priority   = ip_restriction.value.priority
+        action     = ip_restriction.value.action
       }
     }
   }

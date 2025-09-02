@@ -9,26 +9,26 @@ variable "resource_groups" {
 variable "app_service_plans" {
   description = "Map of app service plans to create"
   type = map(object({
-    name          = string
+    name           = string
     resource_group = string
-    location      = string
-    worker_count  = number
-    sku           = string
+    location       = string
+    worker_count   = number
+    sku            = string
   }))
 }
 
 variable "app_services" {
   description = "Map of app services to create"
   type = map(object({
-    name              = string
-    resource_group    = string
-    location          = string
-    app_service_plan  = string
-    ip_restrictions   = list(object({
-      name        = string
-      ip_address  = string
-      priority    = number
-      action      = string
+    name             = string
+    resource_group   = string
+    location         = string
+    app_service_plan = string
+    ip_restrictions = list(object({
+      name       = string
+      ip_address = string
+      priority   = number
+      action     = string
     }))
   }))
 }
@@ -36,11 +36,11 @@ variable "app_services" {
 variable "traffic_manager" {
   description = "Traffic manager configuration"
   type = object({
-    name              = string
-    resource_group    = string
-    location          = string
-    routing_method    = string
-    endpoints         = map(object({
+    name           = string
+    resource_group = string
+    location       = string
+    routing_method = string
+    endpoints = map(object({
       target_resource_id = string
     }))
   })

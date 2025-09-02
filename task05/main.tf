@@ -13,12 +13,12 @@ module "app_service_plans" {
   for_each = var.app_service_plans
   source   = "./modules/app_service_plan"
 
-  name          = each.value.name
+  name           = each.value.name
   resource_group = each.value.resource_group
-  location      = each.value.location
-  worker_count  = each.value.worker_count
-  sku           = each.value.sku
-  tags          = var.tags
+  location       = each.value.location
+  worker_count   = each.value.worker_count
+  sku            = each.value.sku
+  tags           = var.tags
 
   depends_on = [module.resource_groups]
 }
@@ -28,12 +28,12 @@ module "app_services" {
   for_each = var.app_services
   source   = "./modules/app_service"
 
-  name              = each.value.name
-  resource_group    = each.value.resource_group
-  location          = each.value.location
+  name                = each.value.name
+  resource_group      = each.value.resource_group
+  location            = each.value.location
   app_service_plan_id = module.app_service_plans[each.value.app_service_plan == "cmaz-f4p05tns-mod5-asp-01" ? "asp1" : "asp2"].id
-  ip_restrictions   = each.value.ip_restrictions
-  tags              = var.tags
+  ip_restrictions     = each.value.ip_restrictions
+  tags                = var.tags
 
   depends_on = [module.app_service_plans]
 }
