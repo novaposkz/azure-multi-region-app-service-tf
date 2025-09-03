@@ -22,6 +22,14 @@ resource "azurerm_windows_web_app" "app" {
         service_tag = ip_restriction.value.ip_address == "AzureTrafficManager" ? "AzureTrafficManager" : null
       }
     }
+
+    # Default deny rule - добавляем это правило
+    ip_restriction {
+      name       = "Deny all"
+      priority   = 2147483647 # Максимальный приоритет
+      action     = "Deny"
+      ip_address = "Any"
+    }
   }
 
   tags = var.tags
