@@ -23,12 +23,12 @@ resource "azurerm_windows_web_app" "app" {
       }
     }
 
-    # Default deny rule - добавляем это правило
+    # Default deny rule - исправляем на валидный CIDR
     ip_restriction {
       name       = "Deny all"
       priority   = 2147483647 # Максимальный приоритет
       action     = "Deny"
-      ip_address = "Any"
+      ip_address = "0.0.0.0/0" # Все IPv4 адреса
     }
   }
 
