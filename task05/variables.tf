@@ -53,13 +53,3 @@ variable "tags" {
     Creator = "tani_bekeshev@epam.com"
   }
 }
-
-variable "ip_restrictions" {
-  description = "IP restriction rules"
-  type = list(object({
-    name       = string
-    ip_address = string
-    priority   = number
-    action     = string
-  }))
-}
