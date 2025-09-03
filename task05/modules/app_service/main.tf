@@ -26,12 +26,12 @@ resource "azurerm_windows_web_app" "app" {
       }
     }
 
-    # Default deny rule
+    # Default deny rule - используем "Any" вместо CIDR
     ip_restriction {
       name       = "Deny all"
       priority   = 2147483647
       action     = "Deny"
-      ip_address = "0.0.0.0/0"
+      ip_address = "Any" # Специальное значение, которое Azure понимает
     }
   }
 
