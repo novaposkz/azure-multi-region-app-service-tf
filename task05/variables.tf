@@ -24,12 +24,7 @@ variable "app_services" {
     resource_group   = string
     location         = string
     app_service_plan = string
-    ip_restrictions = list(object({
-      name       = string
-      ip_address = string
-      priority   = number
-      action     = string
-    }))
+    # УБИРАЕМ отсюда ip_restrictions
   }))
 }
 
