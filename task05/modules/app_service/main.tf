@@ -7,6 +7,9 @@ resource "azurerm_windows_web_app" "app" {
   site_config {
     always_on = false
 
+    # Отключаем наследование правил для SCM сайта
+    scm_use_main_ip_restriction = true
+
     # Dynamic block for IP restrictions
     dynamic "ip_restriction" {
       for_each = var.ip_restrictions
@@ -23,12 +26,12 @@ resource "azurerm_windows_web_app" "app" {
       }
     }
 
-    # Default deny rule - исправляем на валидный CIDR
+    # Default deny rule
     ip_restriction {
       name       = "Deny all"
-      priority   = 2147483647 # Максимальный приоритет
+      priority   = 2147483647
       action     = "Deny"
-      ip_address = "0.0.0.0/0" # Все IPv4 адреса
+      ip_address = "0.0.0.0/0"
     }
   }
 
