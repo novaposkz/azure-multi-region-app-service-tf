@@ -15,7 +15,7 @@ resource "azurerm_windows_web_app" "app" {
         priority = ip_restriction.value.priority
         action   = ip_restriction.value.action
 
-        # For IP addresses
+        # For IP addresses (with CIDR notation)
         ip_address = ip_restriction.value.ip_address != "AzureTrafficManager" ? ip_restriction.value.ip_address : null
 
         # For service tags
