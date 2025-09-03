@@ -23,7 +23,7 @@ module "app_service_plans" {
   depends_on = [module.resource_groups]
 }
 
-# Create App Services (УБИРАЕМ ip_restrictions отсюда)
+# Create App Services
 module "app_services" {
   for_each = var.app_services
   source   = "./modules/app_service"
@@ -32,6 +32,7 @@ module "app_services" {
   resource_group      = each.value.resource_group
   location            = each.value.location
   app_service_plan_id = module.app_service_plans[each.value.app_service_plan == "cmaz-f4p05tns-mod5-asp-01" ? "asp1" : "asp2"].id
+  ip_restrictions     = each.value.ip_restrictions
   tags                = var.tags
 
   depends_on = [module.app_service_plans]

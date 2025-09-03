@@ -48,3 +48,19 @@ variable "tags" {
     Creator = "tani_bekeshev@epam.com"
   }
 }
+
+variable "app_services" {
+  description = "Map of app services to create"
+  type = map(object({
+    name             = string
+    resource_group   = string
+    location         = string
+    app_service_plan = string
+    ip_restrictions = list(object({
+      name       = string
+      ip_address = string
+      priority   = number
+      action     = string
+    }))
+  }))
+}

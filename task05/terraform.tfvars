@@ -36,12 +36,40 @@ app_services = {
     resource_group   = "cmaz-f4p05tns-mod5-rg-01"
     location         = "westeurope"
     app_service_plan = "cmaz-f4p05tns-mod5-asp-01"
+    ip_restrictions = [
+      {
+        name       = "allow-ip"
+        ip_address = "18.153.146.156"
+        priority   = 100
+        action     = "Allow"
+      },
+      {
+        name       = "allow-tm"
+        ip_address = "AzureTrafficManager"
+        priority   = 200
+        action     = "Allow"
+      }
+    ]
   },
   app2 = {
     name             = "cmaz-f4p05tns-mod5-app-02"
     resource_group   = "cmaz-f4p05tns-mod5-rg-02"
     location         = "eastus"
     app_service_plan = "cmaz-f4p05tns-mod5-asp-02"
+    ip_restrictions = [
+      {
+        name       = "allow-ip"
+        ip_address = "18.153.146.156"
+        priority   = 100
+        action     = "Allow"
+      },
+      {
+        name       = "allow-tm"
+        ip_address = "AzureTrafficManager"
+        priority   = 200
+        action     = "Allow"
+      }
+    ]
   }
 }
 

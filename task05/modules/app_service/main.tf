@@ -7,19 +7,20 @@ resource "azurerm_windows_web_app" "app" {
   site_config {
     always_on = false
 
-    # IP restrictions configuration
-    ip_restriction {
-      name       = "allow-ip"
-      priority   = 100
-      action     = "Allow"
-      ip_address = "18.153.146.156/32"
-    }
+    # Dynamic block for IP restrictions
+    dynamic "ip_restriction" {
+      for_each = var.ip_restrictions
+      content {
+        name     = ip_restriction.value.name
+        priority = ip_restriction.value.priority
+        action   = ip_restriction.value.action
 
-    ip_restriction {
-      name        = "allow-tm"
-      priority    = 200
-      action      = "Allow"
-      service_tag = "AzureTrafficManager"
+        # For IP addresses
+        ip_address = ip_restriction.value.ip_address != "AzureTrafficManager" ? ip_restriction.value.ip_address : null
+
+        # For service tags
+        service_tag = ip_restriction.value.ip_address == "AzureTrafficManager" ? "AzureTrafficManager" : null
+      }
     }
   }
 
