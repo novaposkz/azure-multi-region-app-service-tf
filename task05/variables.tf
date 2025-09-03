@@ -24,7 +24,12 @@ variable "app_services" {
     resource_group   = string
     location         = string
     app_service_plan = string
-    # УБИРАЕМ отсюда ip_restrictions
+    ip_restrictions = list(object({
+      name       = string
+      ip_address = string
+      priority   = number
+      action     = string
+    }))
   }))
 }
 
@@ -47,20 +52,4 @@ variable "tags" {
   default = {
     Creator = "tani_bekeshev@epam.com"
   }
-}
-
-variable "app_services" {
-  description = "Map of app services to create"
-  type = map(object({
-    name             = string
-    resource_group   = string
-    location         = string
-    app_service_plan = string
-    ip_restrictions = list(object({
-      name       = string
-      ip_address = string
-      priority   = number
-      action     = string
-    }))
-  }))
 }
