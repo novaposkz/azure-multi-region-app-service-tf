@@ -10,6 +10,9 @@ resource "azurerm_windows_web_app" "app" {
     # Отключаем наследование правил для SCM сайта
     scm_use_main_ip_restriction = true
 
+    # Устанавливаем действие по умолчанию - Deny
+    ip_restriction_default_action = "Deny"
+
     # Dynamic block for IP restrictions
     dynamic "ip_restriction" {
       for_each = var.ip_restrictions
@@ -24,14 +27,6 @@ resource "azurerm_windows_web_app" "app" {
         # For service tags
         service_tag = ip_restriction.value.ip_address == "AzureTrafficManager" ? "AzureTrafficManager" : null
       }
-    }
-
-    # Default deny rule - используем service_tag "Any"
-    ip_restriction {
-      name        = "Deny all"
-      priority    = 2147483647
-      action      = "Deny"
-      service_tag = "Any" # Специальный service tag для "всех"
     }
   }
 
